@@ -16,8 +16,13 @@ turtlebot2: #namespace
     nsteps: 10000
     running_step: 0.06 # Time for each step
 ```
-
+依存パッケージをいくつかインストール
+```
+pip3 install gym
+pip3 install gitpython
+```
 次に以下を実行
 ```
+export TURTLEBOT_3D_SENSOR=kinect
 roslaunch turtlebot2_training start_training_wall.launch
 ```
