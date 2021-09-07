@@ -23,5 +23,6 @@ pip3 install gitpython
 ```
 次に以下を実行
 ```
+export TURTLEBOT_3D_SENSOR=kinect
 roslaunch turtlebot2_training start_training_wall.launch
 ```
