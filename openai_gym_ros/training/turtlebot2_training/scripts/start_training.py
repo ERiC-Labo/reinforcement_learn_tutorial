@@ -84,12 +84,11 @@ if __name__ == '__main__':
                 highest_reward = cumulated_reward
 
             nextState = ''.join(map(str, observation))
-
+            rospy.logwarn("############### WALL START EPISODE=>" + str(x))
             # Make the algorithm learn based on the results
             rospy.logwarn("# state we were=>" + str(state))
             rospy.logwarn("# action that we took=>" + str(action))
-            rospy.logwarn("# reward that action gave=>" + str(reward))
-            rospy.logwarn("# episode cumulated_reward=>" +
+            rospy.logwarn(""# episode cumulated_reward=>" +
                           str(cumulated_reward))
             rospy.logwarn(
                 "# State in which we will start next step=>" + str(nextState))
