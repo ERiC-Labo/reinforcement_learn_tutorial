@@ -8,7 +8,7 @@
 
   <xacro:include filename="$(find turtlebot_description)/urdf/turtlebot_library.urdf.xacro" />
   
-  <kobuki/>
-  <stack_hexagons                 parent="base_link"/>
-  <sensor_asus_xtion_pro          parent="base_link"/>
+  <xacro:kobuki/>
+  <xacro:stack_hexagons                 parent="base_link"/>
+  <xacro:sensor_asus_xtion_pro          parent="base_link"/>
 </robot>

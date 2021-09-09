@@ -199,9 +199,9 @@ class TurtleBot2WallEnv(turtlebot2_env.TurtleBot2Env):
 
             MAX_X = 6.0
             MIN_X = -1.0
-            MAX_Y = 3.0
-            MIN_Y = -3.0
-
+            MAX_Y = 4.0
+            MIN_Y = -4.0
+            # print("current x: " + str(current_position.x) + "   y: " + str(current_position.y))
             # We see if we are outside the Learning Space
 
             if current_position.x <= MAX_X and current_position.x > MIN_X:
@@ -306,14 +306,14 @@ class TurtleBot2WallEnv(turtlebot2_env.TurtleBot2Env):
         return discretized_ranges
 
 
-    def is_in_desired_position(self,current_position, epsilon=0.05):
+    def is_in_desired_position(self,current_position, epsilon=0.5):
         """
         It return True if the current position is similar to the desired poistion
         """
 
         is_in_desired_pos = False
 
-
+        print("epsilon: " + str(epsilon))
         x_pos_plus = self.desired_point.x + epsilon
         x_pos_minus = self.desired_point.x - epsilon
         y_pos_plus = self.desired_point.y + epsilon

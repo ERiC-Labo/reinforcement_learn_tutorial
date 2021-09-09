@@ -12,12 +12,12 @@ turtlebot2: #namespace
     init_linear_turn_speed: 0.0 # Initial angular speed in shich we start each episode
     
     new_ranges: 5 # How many laser readings we jump in each observation reading, the bigger the less laser resolution
-    min_range: 0.5 # Minimum meters below wich we consider we have crashed
+    min_range: 0.22 # Minimum meters below wich we consider we have crashed
     max_laser_value: 6 # Value considered Ok, no wall
     min_laser_value: 0 # Value considered there is an obstacle or crashed
     
     desired_pose:
-      x: 5.0
+      x: 2
       y: 0.0
       z: 0.0
     
