@@ -88,7 +88,7 @@ if __name__ == '__main__':
             # Make the algorithm learn based on the results
             rospy.logwarn("# state we were=>" + str(state))
             rospy.logwarn("# action that we took=>" + str(action))
-            rospy.logwarn(""# episode cumulated_reward=>" +
+            rospy.logwarn("# episode cumulated_reward=>" +
                           str(cumulated_reward))
             rospy.logwarn(
                 "# State in which we will start next step=>" + str(nextState))
