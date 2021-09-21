@@ -3,7 +3,11 @@
         ""
     ],
     "python.analysis.extraPaths": [
+<<<<<<< HEAD
         "/home/ericlab/ros_package/denso_ws/devel/lib/python3/dist-packages/gen_dataset",
         "./openai_gym_ros/openai_ros/openai_ros/src"
+=======
+        ""
+>>>>>>> af805f7cdf7978124f0ef4eb714dd43bd2d7a46c
     ]
 }

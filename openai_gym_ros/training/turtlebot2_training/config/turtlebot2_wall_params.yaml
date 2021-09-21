@@ -1,6 +1,6 @@
 turtlebot2: #namespace
     task_and_robot_environment_name: 'MyTurtleBot2Wall-v0'
-    ros_ws_abspath: "/home/ericlab/ros_package/saikou_ws"
+    ros_ws_abspath: "/home/ericlab/ros_package/reinforce_learn_wsd"
     running_step: 0.04 # amount of time the control will be executed
     pos_step: 0.016     # increment in position for each command
     
