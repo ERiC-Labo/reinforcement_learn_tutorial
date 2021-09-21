@@ -28,7 +28,7 @@ if __name__ == '__main__':
     # Set the logging system
     rospack = rospkg.RosPack()
     pkg_path = rospack.get_path('turtlebot2_training')
-    outdir = pkg_path + '/training_results'
+    outdir = pkg_path + 'training_parameter_2'
     env = wrappers.Monitor(env, outdir, force=True)
     rospy.loginfo("Monitor Wrapper started")
 
