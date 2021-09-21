@@ -1,5 +1,9 @@
 {
     "python.autoComplete.extraPaths": [
         ""
+    ],
+    "python.analysis.extraPaths": [
+        "/home/ericlab/ros_package/denso_ws/devel/lib/python3/dist-packages/gen_dataset",
+        "./openai_gym_ros/openai_ros/openai_ros/src"
     ]
 }
