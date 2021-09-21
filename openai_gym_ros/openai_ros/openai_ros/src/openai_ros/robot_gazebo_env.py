@@ -43,6 +43,11 @@ class RobotGazeboEnv(gym.Env):
         self.np_random, seed = seeding.np_random(seed)
         return [seed]
 
+    def finish_episode(self):
+        # print("tsuchida_1")
+        self.finish_episode_1()
+        
+
     def step(self, action):
         """
         Function executed each time step.
@@ -61,7 +66,9 @@ class RobotGazeboEnv(gym.Env):
         self.gazebo.unpauseSim()
         self._set_action(action)
         self.gazebo.pauseSim()
+
         obs = self._get_obs()
+        self.is_max()
         done = self._is_done(obs)
         info = {}
         reward = self._compute_reward(obs, done)

@@ -38,7 +38,8 @@ class TurtleBot2MazeEnv(turtlebot2_env.TurtleBot2Env):
 
         # Here we will add any init functions prior to starting the MyRobotEnv
         super(TurtleBot2MazeEnv, self).__init__(ros_ws_abspath)
-
+        self._collide = False
+        self.is_max_para = False
         # Only variable needed to be set here
         number_actions = rospy.get_param('/turtlebot2/n_actions')
         self.action_space = spaces.Discrete(number_actions)
@@ -179,6 +180,15 @@ class TurtleBot2MazeEnv(turtlebot2_env.TurtleBot2Env):
         rospy.logdebug("END Set Action ==>"+str(action) +
                        ", NAME="+str(self.last_action))
 
+    def is_max(self):
+        
+        if self.is_max_para:
+            print("max_max")
+            self._episode_done = True
+            print("self._episode_done: " + str(self._episode_done))
+            self.is_max_para = False
+        
+
     def _get_obs(self):
         """
         Here we define what sensor data defines our robots observations
@@ -205,11 +215,11 @@ class TurtleBot2MazeEnv(turtlebot2_env.TurtleBot2Env):
     def _is_done(self, observations):
 
         if self._episode_done:
+            print("owari")
             rospy.logdebug("TurtleBot2 is Too Close to wall==>" +
                            str(self._episode_done))
         else:
             rospy.logerr("TurtleBot2 is Ok ==>")
-
         return self._episode_done
 
     def _compute_reward(self, observations, done):
@@ -220,7 +230,10 @@ class TurtleBot2MazeEnv(turtlebot2_env.TurtleBot2Env):
             else:
                 reward = self.turn_reward
         else:
-            reward = -1*self.end_episode_points
+            if not self._collide:
+                reward = self.end_episode_points
+            else:
+                reward = -1*self.end_episode_points
 
         rospy.logdebug("reward=" + str(reward))
         self.cumulated_reward += reward
@@ -231,6 +244,11 @@ class TurtleBot2MazeEnv(turtlebot2_env.TurtleBot2Env):
         return reward
 
     # Internal TaskEnv Methods
+
+    def finish_episode_1(self):
+        self.is_max_para = True
+        # print("tsuchida_3")
+        self._collide = False
 
     def discretize_observation(self, data, new_ranges):
         """
@@ -268,6 +286,7 @@ class TurtleBot2MazeEnv(turtlebot2_env.TurtleBot2Env):
                     rospy.logerr("done Validation >>> item=" +
                                  str(item)+"< "+str(self.min_range))
                     self._episode_done = True
+                    self._collide = True
                 else:
                     rospy.logwarn("NOT done Validation >>> item=" +
                                   str(item)+"< "+str(self.min_range))
