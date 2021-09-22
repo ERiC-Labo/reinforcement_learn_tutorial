@@ -152,7 +152,7 @@ class DQNAgent_d_dqn:
         actions = torch.LongTensor(actions).to(self.device)
         rewards = torch.FloatTensor(rewards).to(self.device)
         next_states = torch.FloatTensor(next_states).to(self.device)
-        dones = torch.FloatTensor(dones)
+        dones = torch.FloatTensor(dones).to(self.device)
         # resize tensors
         actions = actions.view(actions.size(0), 1)
         dones = dones.view(dones.size(0), 1)
