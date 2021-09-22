@@ -25,9 +25,11 @@ if __name__ == '__main__':
     env = wrappers.Monitor(env, outdir, force=True)
 
     #env_id = "CartPole-v0"
-    MAX_EPISODES = 200
-    MAX_STEPS = 1000
-    BATCH_SIZE = 64
+    
+    MAX_EPISODES = rospy.get_param("~max_episode", 30)
+    MAX_STEPS = rospy.get_param("~max_step", 500)
+    BATCH_SIZE = rospy.get_param("~batch_size", 64)
+
     agent = DQNAgent_d_dqn(env, use_conv=False)
     episode_rewards = mini_batch_train(env, agent, MAX_EPISODES, 
         MAX_STEPS, BATCH_SIZE)

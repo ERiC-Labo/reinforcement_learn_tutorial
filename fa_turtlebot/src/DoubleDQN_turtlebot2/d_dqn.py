@@ -6,8 +6,11 @@ import torch.autograd as autograd
 import numpy as np
 import gym
 import random
+import os
 from collections import deque
 import rospy
+import datetime
+import rospkg
 import pickle
 #Buffer to store gameplays
 class BasicBuffer:
@@ -105,18 +108,27 @@ class DQNAgent_d_dqn:
     def __init__(self, env, use_conv=True, learning_rate=3e-6, gamma=0.99, tau=0.01, buffer_size=10000):
         self.env = env
         self.learning_rate = learning_rate
+        datanow = datetime.datetime.now()
+        self.make_dir = str(datanow.month) + "_" + str(datanow.day) + "_" + str(datanow.hour) + "_" + str(datanow.minute)
         self.gamma = gamma
         self.tau = tau
+        self.load_model_pth_path = rospy.get_param("~load_model_pth_path", "saved_model1.pt")
         self.replay_buffer = BasicBuffer(max_size=buffer_size)
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.use_conv = use_conv
+        self.save_directory = rospy.get_param("~save_directory", "/home/ericlab/reinfoce_learn_pth")
+        PATH = self.save_directory.rstrip('/') + "/"  + self.make_dir + "/"
+        os.mkdir(PATH)
+        self.save_directory = PATH
         if self.use_conv:
             #To create CNN based agent, need to be done for using camera images as sensor data
             pass
         else:
+            print("start")
             try:
                 #Path for a saved algorithm, I also provide a trained model, saved_model.pt
-                PATH = "saved_model.pt"
+                PATH = self.load_model_pth_path
+                
                 self.model = DQN(env.observation_space.shape, env.action_space.n).to(self.device)
                 self.model.load_state_dict(torch.load(PATH))
                 self.target_model = DQN(env.observation_space.shape, env.action_space.n).to(self.device)
@@ -169,7 +181,9 @@ class DQNAgent_d_dqn:
     def update(self, batch_size, episode):
         #Save agent at all stages of updation, so we can use the best one at end
         if not(episode%2):
-            PATH = "d_dqn_"+str(episode)+".pt"
+            PATH = self.save_directory
+            PATH = PATH + "d_dqn_"+str(episode)+".pt"
+            print(PATH)
             torch.save(self.model.state_dict(), PATH)
         batch = self.replay_buffer.sample(batch_size)
         loss = self.compute_loss(batch)
