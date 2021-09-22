@@ -117,7 +117,7 @@ class DQNAgent_d_dqn:
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.use_conv = use_conv
         self.save_directory = rospy.get_param("~save_directory", "/home/ericlab/reinfoce_learn_pth")
-        PATH = self.save_directory.rstrip("/") + "/"  + self.make_dir + "/"
+        PATH = self.save_directory + "/"  + self.make_dir + "/"
         os.mkdir(PATH)
         if self.use_conv:
             #To create CNN based agent, need to be done for using camera images as sensor data
