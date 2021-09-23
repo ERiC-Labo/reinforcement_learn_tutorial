@@ -5,7 +5,9 @@ from .gazebo_connection import GazeboConnection
 from .controllers_connection import ControllersConnection
 #https://bitbucket.org/theconstructcore/theconstruct_msgs/src/master/msg/RLExperimentInfo.msg
 from openai_ros.msg import RLExperimentInfo
-
+from gazebo_msgs.msg import *
+import random
+from tf.transformations import quaternion_from_euler
 # https://github.com/openai/gym/blob/master/gym/core.py
 class RobotGazeboEnv(gym.Env):
 
@@ -17,6 +19,8 @@ class RobotGazeboEnv(gym.Env):
         self.controllers_object = ControllersConnection(namespace=robot_name_space, controllers_list=controllers_list)
         self.reset_controls = reset_controls
         self.seed()
+        self.gazebo_model_pub = rospy.Publisher("/gazebo/set_model_state", ModelState, queue_size=1)
+        self.object_name = "mobile_base"
 
         # Set up ROS related variables
         self.episode_num = 0
@@ -84,6 +88,22 @@ class RobotGazeboEnv(gym.Env):
         self._init_env_variables()
         self._update_episode()
         obs = self._get_obs()
+        pos_ = ModelState()
+        pos_.model_name = self.object_name
+        pos_.pose.position.x = 0
+        pos_.pose.position.y = 0
+        pos_.pose.position.z = 0
+        roll = 0
+        pitch = 0
+        pi = 3.1415
+        yaw = random.uniform(-pi, pi)
+        quat = quaternion_from_euler(roll, pitch, yaw)
+        pos_.pose.orientation.x = quat[0]
+        pos_.pose.orientation.y = quat[1]
+        pos_.pose.orientation.z = quat[2]
+        pos_.pose.orientation.w = quat[3]
+        self.gazebo_model_pub.publish(pos_)
+
         rospy.logdebug("END Reseting RobotGazeboEnvironment")
         return obs
 

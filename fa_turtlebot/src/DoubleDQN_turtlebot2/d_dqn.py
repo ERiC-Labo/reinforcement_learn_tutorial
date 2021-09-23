@@ -128,7 +128,7 @@ class DQNAgent_d_dqn:
             try:
                 #Path for a saved algorithm, I also provide a trained model, saved_model.pt
                 PATH = self.load_model_pth_path
-                
+                print(PATH)
                 self.model = DQN(env.observation_space.shape, env.action_space.n).to(self.device)
                 self.model.load_state_dict(torch.load(PATH))
                 self.target_model = DQN(env.observation_space.shape, env.action_space.n).to(self.device)

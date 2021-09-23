@@ -5,7 +5,7 @@
     <!-- Launch the training system -->
     <arg name="save_directory" default="/home/ericlab/reinfoce_learn_pth/save_half_prezen"/>
     <arg name="load_model_pth_path" default=""/>
-    <arg name="max_episode" default="30"/>
+    <arg name="max_episode" default="400"/>
     <arg name="max_step" default="500"/>
     <arg name="batch_size" default="64"/>
     
